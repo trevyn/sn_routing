@@ -98,6 +98,7 @@ impl Routing {
             info!("{} Starting a new network as the seed node.", node_name);
             let mut zero_config = config.transport_config;
             zero_config.ip = Some(std::net::Ipv4Addr::new(0, 0, 0, 0).into());
+            zero_config.forward_port = true;
             let comm = Comm::new(zero_config, connection_event_tx)?;
             let node = Node::new(keypair, comm.our_connection_info().await?).with_age(MIN_AGE + 1);
             let state = Approved::first_node(node, event_tx)?;
